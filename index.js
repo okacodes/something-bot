@@ -37,11 +37,23 @@ for (const folder of commandFolders) {
 
 client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand()) return;
+	console.log(interaction);
     const command = interaction.client.commands.get(interaction.commandName);
 
 	if (!command) {
 		console.error(`No command matching ${interaction.commandName} was found.`);
 		return;
+	}
+
+	if (interaction.commandName === 'ping') {
+		await interaction.reply('Pong!')
+
+		// it's important to note that you can do things like wait for a response from a request,
+		// or something similar, before going to the next line
+		// for example, the first .reply could be "Loading..." before being changed by .editReply
+		// example next line
+		// do something that requires time (database queries, api requests, ...)
+		await interaction.editReply('Pong again!'); 
 	}
 
 	try {
